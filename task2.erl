@@ -18,7 +18,7 @@ factorial(Num) when Num < 0; is_number(Num) =/= true ->
 factorial(0) -> 1;
 factorial(Num) -> Num * factorial(Num - 1).
 
-%Доработать эту функцию, мне кажется, что что-то не так
+
 is_prime_numb(N, I) when N < 2; is_number(N) =/= true; is_number(I) =/= true->
     io:format("NO~n");
 is_prime_numb(2, 2) -> io:format("YES~n");
