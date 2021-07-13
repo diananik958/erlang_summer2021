@@ -1,9 +1,5 @@
 -module(task2).
--export([fibonacci/1]).
--export([factorial/1]).
--export([is_prime_numb/2]).
--export([dig_sum/1]).
--export([flip_num/2]).
+-export([fibonacci/1, factorial/1, is_prime_numb/2, dig_sum/1, flip_num/2]).
 
 
 fibonacci(Numb) when Numb < 0; is_number(Numb) =/= true -> 
