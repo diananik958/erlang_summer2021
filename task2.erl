@@ -1,5 +1,5 @@
 -module(task2).
--export([fibonacci/1, factorial/1, is_prime_numb/2, dig_sum/1, flip_num/2]).
+-export([fibonacci/1, factorial/1, is_prime_numb/1, dig_sum/1, flip_num/2]).
 
 
 fibonacci(Numb) when Numb < 0; is_number(Numb) =/= true -> 
@@ -14,6 +14,8 @@ factorial(Num) when Num < 0; is_number(Num) =/= true ->
 factorial(0) -> 1;
 factorial(Num) -> Num * factorial(Num - 1).
 
+
+is_prime_numb(N) -> is_prime_numb(N, 2).
 
 is_prime_numb(N, I) when N < 2; is_number(N) =/= true; is_number(I) =/= true->
     io:format("NO~n");
