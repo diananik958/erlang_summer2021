@@ -1,4 +1,4 @@
-`{Erlang} {$ erl -sname client1 -setcookie calc
+``` {$ erl -sname client1 -setcookie calc
 Erlang/OTP 22 [erts-10.6.4] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe]
 
 Eshell V10.6.4  (abort with ^G)
@@ -19,11 +19,11 @@ ok
 {<0.85.0>,[pow,2,8]}
 (client1@linux)7> flush().
 Shell got 256.0
-ok}`
+ok```
 
 
 
-`{$ erl -sname client2 -setcookie calc
+```$ erl -sname client2 -setcookie calc
 Erlang/OTP 22 [erts-10.6.4] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe]
 
 Eshell V10.6.4  (abort with ^G)
@@ -36,5 +36,5 @@ Recompiling /home/diana/Desktop/Erlang/node_calc.erl
 (client2@linux)3> node_calc:calculator().
 sqrt
 sin
-pow}`
+pow```
 
