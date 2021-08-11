@@ -19,3 +19,10 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/myserver](https://hexdocs.pm/myserver).
 
+
+To start web-server do:
+
+$ mix compile
+$ iex -S mix
+iex(1)> MYSERVER.start
+
