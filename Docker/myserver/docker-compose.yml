@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+    app:
+        container_name: my_server
+        build: .
+        ports:
+            - 8080:8080
+        links:
+            - db
+    db:
+        container_name: db_container
+        image: mysql:latest
+        restart: always
+        volumes:
+            - "./scripts/create.sql:/docker-entrypoint-initdb.d/1.sql"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: testserver1
+            MYSQL_USER: test
+            MYSQL_PASSWORD: Test123!
+        ports:
+            - 5000:5000
