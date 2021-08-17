@@ -3,6 +3,12 @@
 -compile({no_auto_import,[error/1]}).
 
 
+-record(webdata, {ip,
+                  port,
+                  date,
+                  time,
+                  path}).
+
 formatstring(Elem) ->
     IOList = io_lib:format("~w", [Elem]),
     FlatList = lists:flatten(IOList) -- "[",
@@ -18,10 +24,52 @@ mysql(Tuple) ->
     io:fwrite("Date ~p~n", [D]),
     T = formatstring(Hour) ++ ":" ++ formatstring(Min) ++ ":" ++ formatstring(Sec),
     io:fwrite("Time ~p~n", [T]),
-    %% Manipulate data
     ok = mysql:query(Pid, "INSERT INTO server VALUES (?, ?, ?, ?, ?, ?)", [formatstring(IPshort), Port, D, T, Path, formatstring(Method)]),
     io:fwrite("OKKK"),
+    DataToMnesia = {formatstring(IPshort), Port, D, T, Path},
+    mnesiadb(DataToMnesia),
     mysql:stop(Pid).
+
+%[["{10,20,0,121}", 58182, {2021, 8, 5}, {0, {7, 44, 53}}, "/", "'GET'"],
+
+
+mnesiadb(Data) ->
+    mnesia:create_schema([node()]),
+    case mnesia:start() of
+        ok ->
+            try
+                mnesia:table_info(type, webdata),
+                insert_data(Data),
+                read_data()
+            catch 
+                exit:_ ->
+                    mnesia:create_table(webdata, [{attributes, [ip, port, date, time, path]},
+                                                            {disc_copies,[node()]}]),
+                    insert_data(Data),
+                    read_data()
+            end;
+        {error, Reason} ->
+            error_logger:error_report(["Mnesia start error: ", Reason]),
+            {error, Reason}
+    end.
+
+
+insert_data(Data) ->
+    {IP, Port, Date, Time, Path} = Data,
+    io:fwrite("Mnesia: ~p,~n ~p,~n ~p,~n ~p,~n ~p,~n", [IP, Port, Date, Time, Path]),
+    DataToWrite = fun() -> 
+                    mnesia:write(#webdata{ip = IP, port = Port, date = Date, time = Time, path = Path})
+                end,
+    mnesia:transaction(DataToWrite).
+
+
+read_data() ->
+    F = fun() ->
+            Arg = #webdata{ip = '_', port = '$1', _ = '_'},
+            %date = '$2', time = '$3', path = '$4'
+            mnesia:select(webdata, [{Arg, [], ['$1']}])
+        end,
+    io:fwrite("~p~n", [mnesia:transaction(F)]).
 
 
 read_file(Fname) ->
