@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db>
-    <host>localhost</host>
+    <host>127.0.0.1</host>
     <user>test</user>
     <password>Test123!</password>
     <database>testserver1</database>
