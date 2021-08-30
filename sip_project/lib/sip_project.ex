@@ -26,16 +26,21 @@ defmodule SipProject do
 
     opts = [strategy: :one_for_one, name: Sip_project.Supervisor]
     sv = Supervisor.start_link(children, opts)
+
+    # DEBUG
     Logger.info("children output")
     Logger.info(Kernel.inspect(children))
     Logger.info("opts output")
     Logger.info(opts)
+
     Sippet.register_core(:project, MyCore)
     Sippet.register_transport(:project, :udp, true)
+
+    # DEBUG
     Logger.info("sv output")
     Logger.info(Kernel.inspect(sv))
+
     Sippet.send(:project, SenReq.send_reg_request())
-    #Sippet.send(:project, SenReq.send_inv_request())
     sv
 
   end
