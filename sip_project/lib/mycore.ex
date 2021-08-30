@@ -4,6 +4,8 @@ defmodule MyCore do
 
 
   def receive_request(received_request, server_key) do
+
+    # DEBUG
     Logger.info("received request")
     IO.inspect(server_key)
     IO.inspect(received_request)
@@ -25,14 +27,18 @@ defmodule MyCore do
 
       {_, :invite} ->
         Logger.info("Received INVITE request")
-        #outgoing_response = received_request |> Sippet.Message.to_response(100) # 100 - Trying
-        #Sippet.send(:project, outgoing_response)
-        #outgoing_response = received_request |> Sippet.Message.to_response(180) # 180 - Ringing
-        #Sippet.send(:project, outgoing_response)
+
+        outgoing_response = received_request |> Sippet.Message.to_response(100) # 100 - Trying
+        Sippet.send(:project, outgoing_response)
+
+
+        outgoing_response = received_request |> Sippet.Message.to_response(180) # 180 - Ringing
+        Sippet.send(:project, outgoing_response)
 
         outgoing_response = received_request |> Sippet.Message.to_response(200) # 200 - Ok
-
         Sippet.send(:project, outgoing_response)
+
+
         #Logger.info(Kernel.inspect(Sippet.send(:project, outgoing_response)))
         #Sippet.Message.build_response(200)
 
