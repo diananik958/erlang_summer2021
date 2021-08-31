@@ -58,14 +58,14 @@ defmodule MyCore do
     #Logger.info(Kernel.inspect(received_response))
 
     response = Map.get(received_response, :headers)
-    branch = response[:via]
-    [{_, _, _, branch_map}] = branch
+    #branch = response[:via]
+    #[{_, _, _, branch_map}] = branch
     tag = response[:from]
     {_, _, tag_from} = tag
     case response[:cseq] do
       {_, :register} ->
         Logger.info("Received REGISTER response")
-        Sippet.send(:project, SenReq.send_inv_request(response[:call_id], Map.get(branch_map, "branch"),  Map.get(tag_from, "tag")))
+        Sippet.send(:project, SenReq.send_inv_request(response[:call_id],  Map.get(tag_from, "tag")))
 
 
       {_, :invite} ->

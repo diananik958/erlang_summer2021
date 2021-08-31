@@ -34,13 +34,13 @@ defmodule SipProject do
     Logger.info(opts)
 
     Sippet.register_core(:project, MyCore)
-    Sippet.register_transport(:project, :udp, true)
+    #Sippet.register_transport(:project, :udp, true)
 
     # DEBUG
     Logger.info("sv output")
     Logger.info(Kernel.inspect(sv))
 
-    Sippet.send(:project, SenReq.send_reg_request())
+    #Sippet.send(:project, SenReq.send_reg_request())
     sv
 
   end
